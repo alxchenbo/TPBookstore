@@ -50,14 +50,14 @@ function process(books) {
 
 function searchByTitle() {
 	var title = document.getElementById("input_title").value;
-	var url ="/bookstore/api/book-management/books-session?title="+title; 
+	var url ="/TPBookstore/api/book-management/books-session?title="+title; 
 	loadBooks(url);
 }
 
 function postBook(){
 	var jsonBook = {id:1,title:"Thinking in Java 2",author:"Bruce Eckel"};
 	
-	fetch("/bookstore/api/book-management/addbook", {
+	fetch("/TPBookstore/api/book-management/addbook", {
 		  method: "POST", // or 'PUT'
 		  headers: {
 		    "Content-Type": "application/json",
@@ -74,7 +74,7 @@ function postBook(){
 }
 </script>
 </head>
-<body onload="loadBooks('/bookstore/api/book-management/books')">
+<body onload="loadBooks('/TPBookstore/api/book-management/books')">
 
 <h1>Biblioth&egrave;que</h1>
 
@@ -86,7 +86,7 @@ function postBook(){
 	<button onclick="postBook()">add new book by json</button>
 </div>
 <div>Ajout d'un nouveau livre :
-<form action="/bookstore/api/book-management/createbook" method="post">
+<form action="/TPBookstore/api/book-management/createbook" method="post">
 <div>titre : <input type="text" name="book_title"></div>
 <div>auteur : <input type="text" name="book_author"></div>
 <input type="submit" value="Envoyer">
