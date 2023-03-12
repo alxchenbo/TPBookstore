@@ -17,7 +17,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 
 @Path("/book-management")
 public class BookController {
@@ -70,20 +69,6 @@ public class BookController {
 		System.out.println("liste des recherches stockées en session :");
 		queries.stream().forEach(x -> System.out.println("-" + x));
 		return getBooks(title);
-	}
-
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/addbook")
-	public Response addBook(String jsonbook) {
-
-		System.out.println("new book " + jsonbook);
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		Book book = gson.fromJson(jsonbook, Book.class);
-		String json = gson.toJson(book);
-		return Response.status(Response.Status.CREATED).entity(json).build();
 	}
 
 	@POST
