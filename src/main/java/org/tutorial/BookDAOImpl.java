@@ -24,7 +24,6 @@ public class BookDAOImpl implements BookDAO {
 				String author = rs.getString("author");
 				Book book = new Book(id, title, author);
 				result.add(book);
-
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
