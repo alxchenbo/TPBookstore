@@ -13,8 +13,8 @@ public class BookDAOImpl implements BookDAO {
 		List<Book> result = new ArrayList<>();
 		Connection connection = DBManager.getInstance().getConnection();
 
-		Statement statement;
-		ResultSet rs;
+		Statement statement = null;
+		ResultSet rs = null;
 		try {
 			statement = connection.createStatement();
 			rs = statement.executeQuery(query);
@@ -29,6 +29,8 @@ public class BookDAOImpl implements BookDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			DBManager.getInstance().cleanup(connection, statement, rs);
 		}
 
 		return result;
