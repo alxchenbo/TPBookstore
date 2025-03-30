@@ -18,7 +18,7 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/book-management")
+@Path("/books")
 public class BookController {
 
 	private BookDAO bookDAO = new BookDAOImpl();
@@ -30,7 +30,6 @@ public class BookController {
 	public String hello(@Context HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		int count = session.getAttribute("count") == null ? 0 : (int) session.getAttribute("count");
-
 		count++;
 		session.setAttribute("count", count);
 		return "Hello World! -> " + count;
@@ -38,8 +37,7 @@ public class BookController {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/books")
-	public String getBooks(@QueryParam("title") String title) {
+	public String getBooks(@Context HttpServletRequest request, @QueryParam("title") String title) {
 
 		List<Book> books = null;
 		if (title != null) {
@@ -48,31 +46,28 @@ public class BookController {
 			books = bookDAO.findByAll();
 		}
 
+		useSession(request, title);
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();
 		String json = gson.toJson(books);
 		return json;
 	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/books-session")
-	public String getBooksWithSessionHistory(@Context HttpServletRequest req, @QueryParam("title") String title) {
+	private void useSession(HttpServletRequest request, String title) {
 
-		HttpSession session = req.getSession();
+		HttpSession session = request.getSession();
 		List<String> queries = (List<String>) session.getAttribute("queries");
 		if (queries == null) {
 			queries = new ArrayList<>();
 			session.setAttribute("queries", queries);
 		}
 		queries.add(title);
-		System.out.println("liste des recherches stockées en session :");
+		System.out.println("liste des recherches stockÃ©es en session :");
 		queries.stream().forEach(x -> System.out.println("-" + x));
-		return getBooks(title);
+
 	}
 
 	@POST
-	@Path("/createbook")
 	@Consumes("application/x-www-form-urlencoded")
 	public void createBook(@FormParam("book_title") String bookTitle, @FormParam("book_author") String bookAuthor) {
 		Book book = new Book(0, bookTitle, bookAuthor);

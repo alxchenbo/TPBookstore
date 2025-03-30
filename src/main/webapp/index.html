@@ -50,14 +50,14 @@ function process(books) {
 
 function searchByTitle() {
 	var title = document.getElementById("input_title").value;
-	var url ="/TPBookstore/api/book-management/books-session?title="+title; 
+	var url ="/TPBookstore/api/books?title="+title; 
 	loadBooks(url);
 }
 
 
 </script>
 </head>
-<body onload="loadBooks('/TPBookstore/api/book-management/books')">
+<body onload="loadBooks('/TPBookstore/api/books')">
 
 <h1>Biblioth&egrave;que</h1>
 
@@ -67,7 +67,7 @@ function searchByTitle() {
 </div>
 
 <div>Ajout d'un nouveau livre :
-<form action="/TPBookstore/api/book-management/createbook" method="post">
+<form action="/TPBookstore/api/books" method="post">
 <div>titre : <input type="text" name="book_title"></div>
 <div>auteur : <input type="text" name="book_author"></div>
 <input type="submit" value="Envoyer">
