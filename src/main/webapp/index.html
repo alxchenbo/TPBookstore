@@ -1,0 +1,65 @@
+<html>
+<head>
+<style>
+table, th, td {
+  border: 1px solid;
+  padding:5px;
+}
+table {
+  border-collapse: collapse;
+}
+div {
+margin-top: 10px;}
+</style>
+<script>
+function loadBooks(url) {
+	fetch(url)
+	.then(response => response.json())
+	.then(response => process(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+
+
+function process(books) {
+	var booklist = document.getElementById("booklist");
+	
+	if (booklist.hasChildNodes()) {
+		booklist.removeChild(booklist.firstChild);
+	}
+	
+	var table = document.createElement("table");
+	booklist.appendChild(table);
+	
+	console.log(books);
+	for (var book of books) {
+		console.log(book);
+		var tr = document.createElement("tr");
+		var td_id = document.createElement("td");
+		td_id.append(book.id);
+		var td_title = document.createElement("td");
+		td_title.append(book.title);
+		var td_author = document.createElement("td");
+		td_author.append(book.author);
+		tr.appendChild(td_id);
+		tr.appendChild(td_title);
+		tr.appendChild(td_author);
+		table.appendChild(tr);
+	}
+}
+
+function searchByTitle() {
+	//TODO
+}
+
+
+</script>
+</head>
+<body onload="loadBooks('/TPBookstore/api/book-management/books')">
+
+<h1>Biblioth&egrave;que</h1>
+
+<div id="booklist"></div>
+
+</body>
+</html>
